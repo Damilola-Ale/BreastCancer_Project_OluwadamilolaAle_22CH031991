@@ -3,7 +3,7 @@ import numpy as np
 import joblib
 
 # Load saved model
-data = joblib.load("wine_cultivar_model.pkl")
+data = joblib.load("model/wine_cultivar_model.pkl")
 model = data['model']
 scaler = data['scaler']
 features = data['feature_names']
