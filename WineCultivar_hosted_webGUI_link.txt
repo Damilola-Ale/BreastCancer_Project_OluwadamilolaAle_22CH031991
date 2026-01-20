@@ -1,0 +1,6 @@
+Name: Oluwadamilola Ale
+Matric Number: 22CH031991
+Machine Learning Algorithm Used: K-Nearest Neighbours (KNN)
+Model Persistence Method Used: Joblib
+Live URL: https://your-app.streamlit.app
+GitHub Repository Link: https://github.com/yourusername/wine-cultivar-project
