@@ -1,41 +1,47 @@
 import streamlit as st
-import pandas as pd
+import numpy as np
 import joblib
 
 # Load saved model
-data = joblib.load("model/wine_cultivar_model.pkl")
-model = data['model']
-scaler = data['scaler']
-feature_names = data['feature_names']
-target_names = data['target_names']
+data = joblib.load("model/breast_cancer_model.pkl")
+model = data["model"]
+scaler = data["scaler"]
+feature_names = data["feature_names"]
 
-st.title("🍷 Wine Cultivar Origin Prediction System")
-st.write("Enter the wine chemical properties to predict its cultivar.")
+st.set_page_config(page_title="Breast Cancer Prediction System")
 
-# Input fields
-alcohol = st.number_input("Alcohol", min_value=0.0, value=13.0)
-malic_acid = st.number_input("Malic Acid", min_value=0.0, value=2.0)
-ash = st.number_input("Ash", min_value=0.0, value=2.3)
-magnesium = st.number_input("Magnesium", min_value=0.0, value=100.0)
-flavanoids = st.number_input("Flavanoids", min_value=0.0, value=2.0)
-color_intensity = st.number_input("Color Intensity", min_value=0.0, value=5.0)
+st.title("🩺 Breast Cancer Prediction System")
+st.write(
+    "This system predicts whether a breast tumor is **Benign** or **Malignant** "
+    "based on selected tumor features.\n\n"
+    "**For educational purposes only. Not a medical diagnostic tool.**"
+)
 
-if st.button("Predict Cultivar"):
-    # Build input as DataFrame with correct feature order
-    input_df = pd.DataFrame([{
-        'alcohol': alcohol,
-        'malic_acid': malic_acid,
-        'ash': ash,
-        'magnesium': magnesium,
-        'flavanoids': flavanoids,
-        'color_intensity': color_intensity
-    }])[feature_names]
+st.subheader("Enter Tumor Feature Values")
 
-    # Scale correctly
-    input_scaled = scaler.transform(input_df)
+# Input fields (example feature set — must match training)
+radius_mean = st.number_input("Radius Mean", min_value=0.0, format="%.4f")
+texture_mean = st.number_input("Texture Mean", min_value=0.0, format="%.4f")
+perimeter_mean = st.number_input("Perimeter Mean", min_value=0.0, format="%.4f")
+area_mean = st.number_input("Area Mean", min_value=0.0, format="%.4f")
+smoothness_mean = st.number_input("Smoothness Mean", min_value=0.0, format="%.4f")
+
+if st.button("Predict Diagnosis"):
+    input_data = np.array([
+        radius_mean,
+        texture_mean,
+        perimeter_mean,
+        area_mean,
+        smoothness_mean
+    ]).reshape(1, -1)
+
+    # Scale input
+    input_scaled = scaler.transform(input_data)
 
     # Predict
     prediction = model.predict(input_scaled)[0]
-    predicted_label = target_names[prediction]
 
-    st.success(f"Predicted Wine Cultivar: {predicted_label}")
+    # Map output
+    diagnosis = "Malignant" if prediction == 1 else "Benign"
+
+    st.success(f"🔍 Predicted Diagnosis: **{diagnosis}**")
