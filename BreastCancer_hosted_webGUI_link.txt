@@ -3,4 +3,4 @@ Matric Number: 22CH031991
 Machine Learning Algorithm Used: K-Nearest Neighbours (KNN)
 Model Persistence Method Used: Joblib
 Live URL: https://winecultivarproject.streamlit.app
-GitHub Repository Link: https://github.com/Damilola-Ale/WineCultivar_Project
+GitHub Repository Link: https://github.com/Damilola-Ale/WineCultivar_Project_OluwadamilolaAle_22CH031991
